@@ -1,13 +1,27 @@
 import { StyleSheet, Dimensions } from 'react-native';
 
-const { width } = Dimensions.get('screen');
+const { width, height } = Dimensions.get('screen');
 
 export default StyleSheet.create({
+  container: {
+    width,
+    height,
+    paddingBottom: 30
+  },
   appbar: {
     width
   },
-  card: {
-    margin: 16,
-    width: width * 0.9
+  titleWrapper: {
+    padding: 8
+  },
+  hScrollView: {
+    width
+  },
+  homeMenuItems: {
+    width,
+    flexWrap: 'wrap',
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+    height: height - 1000
   }
 });

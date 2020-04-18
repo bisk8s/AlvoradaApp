@@ -26,7 +26,8 @@ const PaperTheme: Theme = {
   colors: {
     ...DefaultTheme.colors,
     primary: '#3498db',
-    accent: '#f1c40f'
+    accent: '#f1c40f',
+    text: '#211d1d'
   }
 };
 

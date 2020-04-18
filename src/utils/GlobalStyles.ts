@@ -120,8 +120,10 @@ export const getShadow = (elevation: number) => {
   const y = s.y === 1 ? 1 : Math.floor(s.y * 0.5);
   // Code
   const height = y;
-  const shadowOpacity = interpolate(_elevation, 1, 24, 0.2, 0.6).toFixed(2);
-  const shadowRadius = interpolate(s.blur, 1, 38, 1, 16).toFixed(2); //(s.blur * 0.45).toFixed(2);
+  const shadowOpacity = parseFloat(
+    interpolate(_elevation, 1, 24, 0.2, 0.6).toFixed(2)
+  );
+  const shadowRadius = parseFloat(interpolate(s.blur, 1, 38, 1, 16).toFixed(2)); //(s.blur * 0.45).toFixed(2);
   return {
     shadowColor: '#000',
     shadowOffset: {
