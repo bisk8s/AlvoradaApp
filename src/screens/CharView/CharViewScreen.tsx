@@ -41,7 +41,18 @@ export default class CharViewScreen extends Component<any, State> {
         </Appbar.Header>
         <View style={Styles.titleWrapper}>
           <Title>Ficha</Title>
-          <TextInput placeholder="Nome" value={this.state.char.name} />
+          <ScrollView style={Styles.hScrollView}>
+            <View style={Styles.homeMenuItems}>
+              <View style={{ flex: 0.7 }}>
+                <TextInput placeholder="Nome" value={this.state.char.name} />
+              </View>
+              <View style={{ flex: 0.3 }}>
+                <Button mode="contained" onPress={() => console.log('Pressed')}>
+                  Aleatório
+                </Button>
+              </View>
+            </View>
+          </ScrollView>
         </View>
       </View>
     );

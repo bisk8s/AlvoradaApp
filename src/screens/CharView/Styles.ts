@@ -23,5 +23,8 @@ export default StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-evenly',
     height: height - 1000
+  },
+  nameContainer: {
+    // flexDirection: 'row'
   }
 });
