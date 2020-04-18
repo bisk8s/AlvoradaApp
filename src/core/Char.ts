@@ -81,12 +81,31 @@ const allowedClassByRace = {
   'cl-for-Urso': [...globalClasses, 'Monge']
 };
 
+const racesConversionTable = {
+  'en-for-Anão': 'dwarf',
+  'en-for-Bastet': 'fairy',
+  'en-for-Caliban': 'drow',
+  'en-for-Draconiano': 'dragon',
+  'en-for-Elfo': 'elf',
+  'en-for-Goblin': 'goblin',
+  'en-for-Humano': 'human',
+  'en-for-Ogro': 'orc',
+  'en-for-Trow': 'darkelf',
+  'en-for-Urso': 'cavePerson'
+};
+
 export function randomNewChar(): AlvoradaChar {
   const gender = _.sample(['male', 'female', 'transgender']) as AlvoradaGender;
-  const name = _.toString(
-    nameByRace('human', { gender, allowMultipleNames: false })
-  );
   const race = _.sample(races) as AlvoradaRaceType;
+  const genRace = _.get(racesConversionTable, `en-for-${race}`);
+  const genGender = gender === 'male' ? gender : 'female';
+  const name = _.toString(
+    nameByRace(genRace, {
+      gender: genGender,
+      allowMultipleNames: false
+    })
+  );
+  console.log(genRace, genGender, name);
   const charClass = _.sample(_.get(allowedClassByRace, `cl-for-${race}`));
   return {
     name,
