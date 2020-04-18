@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Surface, Chip, Subheading, Caption } from 'react-native-paper';
 import _ from 'lodash';
 
-import { TouchableOpacity } from 'react-native';
+import { TouchableOpacity, View } from 'react-native';
 import CategoryIcon, { CategoryIconType } from '../icons/CategoryIcon';
 
 import { StyleSheet, Dimensions } from 'react-native';
@@ -30,15 +30,21 @@ export default class TouchableCard extends Component<Props> {
       <TouchableOpacity onPress={this.props.onPress}>
         <Surface style={styles.surface}>
           <CategoryIcon icon={this.props.icon} />
-          <Subheading>{_.truncate(this.props.title, { length: 6 })}</Subheading>
-          <Caption>{_.truncate(this.props.caption, { length: 7 })}</Caption>
-          {_.map(this.props.chips, (chip, iChip) => {
-            return (
-              <Chip key={iChip.toString()} icon={_.get(chip, 'icon', null)}>
-                {_.get(chip, 'text', chip)}
-              </Chip>
-            );
-          })}
+          <Subheading style={{ textAlign: 'center' }}>
+            {this.props.title}
+          </Subheading>
+          <Caption style={{ textAlign: 'center' }}>
+            {this.props.caption}
+          </Caption>
+          <View style={{ flexDirection: 'row' }}>
+            {_.map(this.props.chips, (chip, iChip) => {
+              return (
+                <Chip key={iChip.toString()} icon={_.get(chip, 'icon', null)}>
+                  {_.get(chip, 'text', chip)}
+                </Chip>
+              );
+            })}
+          </View>
         </Surface>
       </TouchableOpacity>
     );
@@ -50,7 +56,7 @@ const styles = StyleSheet.create({
     marginBottom: 8,
     marginRight: 8,
     padding: 8,
-    width: width * 0.9 * 0.25,
+    width: width * 0.9 * 0.5,
     alignItems: 'center',
     justifyContent: 'center',
     elevation: 4

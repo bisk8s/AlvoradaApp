@@ -31,6 +31,7 @@ export default class HomeScreeen extends Component<any, State> {
     const { charList } = this.state;
     charList.push(randomNewChar());
     this.setState({ charList });
+    LocalStorage.set('charList', charList);
   };
   _loadChars = () => {
     LocalStorage.get('charList').then(charList => {
@@ -54,7 +55,7 @@ export default class HomeScreeen extends Component<any, State> {
         <View style={Styles.titleWrapper}>
           <Title>Personagens</Title>
         </View>
-        <ScrollView pagingEnabled style={Styles.hScrollView}>
+        <ScrollView style={Styles.hScrollView}>
           <View style={Styles.homeMenuItems}>
             {_.map(this.state.charList, (char, iChar) => {
               return (
@@ -68,7 +69,10 @@ export default class HomeScreeen extends Component<any, State> {
                   ]}
                   icon={char.charClass.toString() as CategoryIconType}
                   onPress={() => {
-                    console.log(char.name);
+                    this.props.navigation.navigate('CharView', {
+                      char,
+                      id: iChar
+                    });
                   }}
                 />
               );
