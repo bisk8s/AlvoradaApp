@@ -49,7 +49,7 @@ export default class HomeScreeen extends Component<any, State> {
             title={Constants.manifest.name}
             subtitle={Constants.manifest.version}
           />
-          {/* <Appbar.Action icon="account-arrow-left" onPress={() => {}} /> */}
+          <Appbar.Action icon="account-plus" onPress={this._newChar} />
         </Appbar.Header>
         <View style={Styles.titleWrapper}>
           <Title>Personagens</Title>
@@ -75,9 +75,6 @@ export default class HomeScreeen extends Component<any, State> {
             })}
           </View>
         </ScrollView>
-        <Button icon="plus" mode="contained" onPress={this._newChar}>
-          Novo
-        </Button>
       </View>
     );
   }

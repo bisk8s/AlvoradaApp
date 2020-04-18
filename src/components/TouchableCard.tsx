@@ -31,7 +31,7 @@ export default class TouchableCard extends Component<Props> {
         <Surface style={styles.surface}>
           <CategoryIcon icon={this.props.icon} />
           <Subheading>{_.truncate(this.props.title, { length: 6 })}</Subheading>
-          <Caption>{this.props.caption}</Caption>
+          <Caption>{_.truncate(this.props.caption, { length: 7 })}</Caption>
           {_.map(this.props.chips, (chip, iChip) => {
             return (
               <Chip key={iChip.toString()} icon={_.get(chip, 'icon', null)}>
