@@ -5,12 +5,18 @@ import { ClassType } from 'react';
 export interface AlvoradaChar {
   name: string;
   level: number;
-  gender: AlvoradaGender;
+  gender: AlvoradaGenderType;
   race: AlvoradaRaceType;
   charClass: AlvoradaClassType;
 }
 
-export type AlvoradaGender = 'male' | 'female' | 'transgender';
+export type AlvoradaGenderType = 'male' | 'female' | 'transgender';
+export const AlvoradaGenders: AlvoradaGenderType[] = [
+  'male',
+  'female',
+  'transgender'
+];
+
 export type AlvoradaRaceType =
   | 'Anão'
   | 'Bastet'
@@ -129,7 +135,11 @@ const racesConversionTable = {
 };
 
 export function randomNewChar(): AlvoradaChar {
-  const gender = _.sample(['male', 'female', 'transgender']) as AlvoradaGender;
+  const gender = _.sample([
+    'male',
+    'female',
+    'transgender'
+  ]) as AlvoradaGenderType;
   const race = _.sample(races) as AlvoradaRaceType;
   const name = randomCharName(race, gender);
   const charClass = _.sample(getAllowedClasses(race));

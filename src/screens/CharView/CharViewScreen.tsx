@@ -4,12 +4,12 @@ import _ from 'lodash';
 
 import { ScrollView, View, TouchableOpacity } from 'react-native';
 import {
-  Surface,
   Appbar,
-  Title,
   IconButton,
+  Menu,
+  Surface,
   TextInput,
-  Menu
+  Title
 } from 'react-native-paper';
 
 import Styles from './Styles';
@@ -17,10 +17,12 @@ import Styles from './Styles';
 import LocalStorage from '../../services/LocalStorage';
 import {
   AlvoradaChar,
-  AlvoradaRaces as AlvoradaRacesList,
   AlvoradaClassType,
-  getAllowedClasses,
+  AlvoradaGenders,
+  AlvoradaGenderType,
+  AlvoradaRaces,
   AlvoradaRaceType,
+  getAllowedClasses,
   randomCharName
 } from '../../core/Char';
 
@@ -31,9 +33,10 @@ interface State {
   classMenuVisible: boolean;
   raceMenuVisible: boolean;
   levelMenuVisible: boolean;
+  genderMenuVisible: boolean;
 
-  saveChar?: (char: AlvoradaChar, id: number) => void;
   charClassList: AlvoradaClassType[];
+  saveChar?: (char: AlvoradaChar, id: number) => void;
 }
 
 export default class CharViewScreen extends Component<any, State> {
@@ -42,9 +45,11 @@ export default class CharViewScreen extends Component<any, State> {
     const params = _.get(props.navigation.state, 'params', null);
     this.state = {
       ...params,
+
       classMenuVisible: false,
       raceMenuVisible: false,
       levelMenuVisible: false,
+      genderMenuVisible: false,
 
       charClassList: getAllowedClasses(params.char.race)
     };
@@ -57,8 +62,7 @@ export default class CharViewScreen extends Component<any, State> {
           <Appbar.Action
             icon="arrow-left"
             onPress={() => {
-              this.state.saveChar &&
-                this.state.saveChar(this.state.char, this.state.id);
+              this._saveChanges();
               this.props.navigation.goBack();
             }}
           />
@@ -79,6 +83,7 @@ export default class CharViewScreen extends Component<any, State> {
                   label="Nome"
                   mode="outlined"
                   value={this.state.char.name}
+                  onChangeText={text => this._setCharName(text)}
                 />
               </View>
               <View
@@ -111,7 +116,7 @@ export default class CharViewScreen extends Component<any, State> {
                     </TouchableOpacity>
                   }
                 >
-                  {_.map(AlvoradaRacesList, value => {
+                  {_.map(AlvoradaRaces, value => {
                     return (
                       <Menu.Item
                         key={value}
@@ -173,8 +178,55 @@ export default class CharViewScreen extends Component<any, State> {
                 <IconButton icon="shuffle" onPress={this._setRandomCharClass} />
               </View>
             </View>
-            {/* Level */}
+            {/* --- */}
             <View style={Styles.lineWrapper}>
+              {/* GENDER */}
+              <View style={{ flex: 1, marginRight: 8 }}>
+                <Menu
+                  visible={this.state.genderMenuVisible}
+                  onDismiss={this._closeAllMenus}
+                  anchor={
+                    <TextInput
+                      label="Gênero"
+                      mode="outlined"
+                      value=" "
+                      editable={false}
+                      render={props => {
+                        return (
+                          <IconButton
+                            icon={`gender-${this.state.char.gender.toString()}`}
+                            onPress={() => {
+                              this.setState({ genderMenuVisible: true });
+                            }}
+                          />
+                        );
+                      }}
+                    />
+                  }
+                >
+                  {_.map(AlvoradaGenders, gender => {
+                    return (
+                      <Menu.Item
+                        key={gender.toString()}
+                        onPress={() => {
+                          this._setCharGender(gender);
+                        }}
+                        title=""
+                        icon={`gender-${gender.toString()}`}
+                      />
+                    );
+                  })}
+                </Menu>
+              </View>
+              <View
+                style={{ alignContent: 'center', justifyContent: 'center' }}
+              >
+                <IconButton
+                  icon="shuffle"
+                  onPress={this._setRandomCharGender}
+                />
+              </View>
+              {/* LEVEL */}
               <View style={{ flex: 1, marginRight: 8 }}>
                 <Menu
                   visible={this.state.levelMenuVisible}
@@ -217,6 +269,7 @@ export default class CharViewScreen extends Component<any, State> {
                 <IconButton icon="shuffle" onPress={this._setRandomCharLevel} />
               </View>
             </View>
+
             {/* END */}
           </View>
         </ScrollView>
@@ -224,23 +277,31 @@ export default class CharViewScreen extends Component<any, State> {
     );
   }
 
-  _saveChanges = () => {};
+  _saveChanges = () => {
+    if (this.state.saveChar)
+      this.state.saveChar(this.state.char, this.state.id);
+  };
 
   _setRandomCharName = () => {
     const name = randomCharName(this.state.char.race, this.state.char.gender);
+    this._setCharName(name);
+  };
+  _setCharName = name => {
     this.setState({
       char: {
         ...this.state.char,
         name
       }
     });
+    this._saveChanges();
   };
 
   _closeAllMenus = () => {
     this.setState({
       classMenuVisible: false,
       raceMenuVisible: false,
-      levelMenuVisible: false
+      levelMenuVisible: false,
+      genderMenuVisible: false
     });
   };
 
@@ -255,10 +316,11 @@ export default class CharViewScreen extends Component<any, State> {
       }
     });
     this._closeAllMenus();
+    this._saveChanges();
   };
 
   _setRandomCharRace = () => {
-    this._setCharRace(_.sample(AlvoradaRacesList));
+    this._setCharRace(_.sample(AlvoradaRaces));
   };
   _setCharRace = (race: AlvoradaRaceType) => {
     let charClass = this.state.char.charClass;
@@ -275,6 +337,7 @@ export default class CharViewScreen extends Component<any, State> {
       charClassList
     });
     this._closeAllMenus();
+    this._saveChanges();
   };
 
   _setRandomCharClass = () => {
@@ -288,5 +351,20 @@ export default class CharViewScreen extends Component<any, State> {
       }
     });
     this._closeAllMenus();
+    this._saveChanges();
+  };
+
+  _setRandomCharGender = () => {
+    this._setCharGender(_.sample(AlvoradaGenders));
+  };
+  _setCharGender = (gender: AlvoradaGenderType) => {
+    this.setState({
+      char: {
+        ...this.state.char,
+        gender
+      }
+    });
+    this._closeAllMenus();
+    this._saveChanges();
   };
 }
