@@ -1,5 +1,6 @@
 import _ from 'lodash';
-import { nameByRace } from 'fantasy-name-generator';
+import { nameByRace, RaceType } from 'fantasy-name-generator';
+import { ClassType } from 'react';
 
 export interface AlvoradaChar {
   name: string;
@@ -21,6 +22,18 @@ export type AlvoradaRaceType =
   | 'Ogro'
   | 'Trow'
   | 'Urso';
+export const AlvoradaRaces: AlvoradaRaceType[] = [
+  'Anão',
+  'Bastet',
+  'Caliban',
+  'Draconiano',
+  'Elfo',
+  'Goblin',
+  'Humano',
+  'Ogro',
+  'Trow',
+  'Urso'
+];
 
 export type AlvoradaClassType =
   | 'Arqueiro'
@@ -42,6 +55,27 @@ export type AlvoradaClassType =
   | 'Piromante'
   | 'Samurai'
   | 'Xamã';
+export const AlvoradaClassList: AlvoradaClassType[] = [
+  'Arqueiro',
+  'Assasino',
+  'Bárbaro',
+  'Bardo',
+  'Bispo',
+  'Cigano',
+  'Clérigo',
+  'Demolidor',
+  'Dragão',
+  'Druida',
+  'Ferreiro',
+  'Guerreiro',
+  'Ladino',
+  'Monge',
+  'Necromante',
+  'Paladino',
+  'Piromante',
+  'Samurai',
+  'Xamã'
+];
 
 const races = [
   'Anão',
@@ -56,7 +90,7 @@ const races = [
   'Urso'
 ];
 
-const globalClasses = [
+const globalClasses: AlvoradaClassType[] = [
   'Arqueiro',
   'Bárbaro',
   'Bardo',
@@ -106,7 +140,7 @@ export function randomNewChar(): AlvoradaChar {
     })
   );
   console.log(genRace, genGender, name);
-  const charClass = _.sample(_.get(allowedClassByRace, `cl-for-${race}`));
+  const charClass = _.sample(getAllowedClasses(race));
   return {
     name,
     gender,
@@ -114,4 +148,8 @@ export function randomNewChar(): AlvoradaChar {
     race,
     charClass
   };
+}
+
+export function getAllowedClasses(race: AlvoradaRaceType): AlvoradaClassType[] {
+  return _.get(allowedClassByRace, `cl-for-${race}`).sort();
 }

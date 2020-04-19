@@ -2,7 +2,7 @@ import Constants from 'expo-constants';
 import React, { Component } from 'react';
 import _ from 'lodash';
 
-import { ScrollView, View } from 'react-native';
+import { ScrollView, View, TouchableOpacity } from 'react-native';
 import {
   Surface,
   Appbar,
@@ -15,7 +15,14 @@ import {
 import Styles from './Styles';
 
 import LocalStorage from '../../services/LocalStorage';
-import { AlvoradaChar } from '../../core/Char';
+import {
+  AlvoradaChar,
+  AlvoradaRaces as AlvoradaRacesList,
+  AlvoradaClassList,
+  AlvoradaClassType,
+  getAllowedClasses,
+  AlvoradaRaceType
+} from '../../core/Char';
 
 interface State {
   id: number;
@@ -24,6 +31,8 @@ interface State {
   classMenuVisible: boolean;
   raceMenuVisible: boolean;
   levelMenuVisible: boolean;
+
+  charClassList: AlvoradaClassType[];
 }
 
 export default class CharViewScreen extends Component<any, State> {
@@ -34,7 +43,9 @@ export default class CharViewScreen extends Component<any, State> {
       ...state,
       classMenuVisible: false,
       raceMenuVisible: false,
-      levelMenuVisible: false
+      levelMenuVisible: false,
+
+      charClassList: getAllowedClasses(state.char.race)
     };
   }
 
@@ -76,27 +87,38 @@ export default class CharViewScreen extends Component<any, State> {
                 />
               </View>
             </View>
-            {/* Classe */}
+            {/* Raça */}
             <View style={Styles.lineWrapper}>
               <View style={{ flex: 1, marginRight: 8 }}>
                 <Menu
-                  visible={this.state.classMenuVisible}
+                  visible={this.state.raceMenuVisible}
                   onDismiss={this._closeAllMenus}
                   anchor={
-                    <TextInput
-                      label="Classe"
-                      mode="outlined"
-                      value={this.state.char.charClass}
-                      editable={false}
-                      onTouchEnd={() => {
-                        this.setState({ classMenuVisible: true });
+                    <TouchableOpacity
+                      onPress={() => {
+                        this.setState({ raceMenuVisible: true });
                       }}
-                    />
+                    >
+                      <TextInput
+                        label="Raça"
+                        mode="outlined"
+                        value={this.state.char.race}
+                        editable={false}
+                      />
+                    </TouchableOpacity>
                   }
                 >
-                  <Menu.Item onPress={() => {}} title="Item 1" />
-                  <Menu.Item onPress={() => {}} title="Item 2" />
-                  <Menu.Item onPress={() => {}} title="Item 3" />
+                  {_.map(AlvoradaRacesList, value => {
+                    return (
+                      <Menu.Item
+                        key={value}
+                        title={value}
+                        onPress={() => {
+                          this._setCharRace(value);
+                        }}
+                      />
+                    );
+                  })}
                 </Menu>
               </View>
               <View
@@ -108,27 +130,38 @@ export default class CharViewScreen extends Component<any, State> {
                 />
               </View>
             </View>
-            {/* Raça */}
+            {/* Classe */}
             <View style={Styles.lineWrapper}>
               <View style={{ flex: 1, marginRight: 8 }}>
                 <Menu
-                  visible={this.state.raceMenuVisible}
+                  visible={this.state.classMenuVisible}
                   onDismiss={this._closeAllMenus}
                   anchor={
-                    <TextInput
-                      label="Raça"
-                      mode="outlined"
-                      value={this.state.char.race}
-                      editable={false}
-                      onTouchEnd={() => {
-                        this.setState({ raceMenuVisible: true });
+                    <TouchableOpacity
+                      onPress={() => {
+                        this.setState({ classMenuVisible: true });
                       }}
-                    />
+                    >
+                      <TextInput
+                        label="Classe"
+                        mode="outlined"
+                        value={this.state.char.charClass}
+                        editable={false}
+                      />
+                    </TouchableOpacity>
                   }
                 >
-                  <Menu.Item onPress={() => {}} title="Item 1" />
-                  <Menu.Item onPress={() => {}} title="Item 2" />
-                  <Menu.Item onPress={() => {}} title="Item 3" />
+                  {_.map(this.state.charClassList, value => {
+                    return (
+                      <Menu.Item
+                        key={value}
+                        title={value}
+                        onPress={() => {
+                          this._setCharClass(value);
+                        }}
+                      />
+                    );
+                  })}
                 </Menu>
               </View>
               <View
@@ -147,15 +180,18 @@ export default class CharViewScreen extends Component<any, State> {
                   visible={this.state.levelMenuVisible}
                   onDismiss={this._closeAllMenus}
                   anchor={
-                    <TextInput
-                      label="Level"
-                      mode="outlined"
-                      value={this.state.char.level.toString()}
-                      editable={false}
-                      onTouchEnd={() => {
+                    <TouchableOpacity
+                      onPress={() => {
                         this.setState({ levelMenuVisible: true });
                       }}
-                    />
+                    >
+                      <TextInput
+                        label="Level"
+                        mode="outlined"
+                        value={this.state.char.level.toString()}
+                        editable={false}
+                      />
+                    </TouchableOpacity>
                   }
                 >
                   {_.times(6, iNum => {
@@ -205,4 +241,37 @@ export default class CharViewScreen extends Component<any, State> {
     });
     this._closeAllMenus();
   };
+
+  _setRandomCharRace() {
+    this._setCharRace(_.sample(AlvoradaRacesList));
+  }
+  _setCharRace(race: AlvoradaRaceType) {
+    let charClass = this.state.char.charClass;
+    const charClassList = getAllowedClasses(race);
+    if (_.lastIndexOf(charClassList, charClass) < 0) {
+      charClass = _.first(charClassList);
+    }
+    this.setState({
+      char: {
+        ...this.state.char,
+        race,
+        charClass
+      },
+      charClassList
+    });
+    this._closeAllMenus();
+  }
+
+  _setRandomCharClass() {
+    this._setCharClass(_.sample(AlvoradaClassList));
+  }
+  _setCharClass(charClass: AlvoradaClassType) {
+    this.setState({
+      char: {
+        ...this.state.char,
+        charClass
+      }
+    });
+    this._closeAllMenus();
+  }
 }
