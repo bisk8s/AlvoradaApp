@@ -374,7 +374,7 @@ export const AlvoradaClassInfoList: AlvoradaClassInfoListType = {
       passiveSkill: {
         title: 'Cartografia',
         desc:
-          'm um excelente senso de direção. Os ciganos geralmente têm uma orientação em viagem se perdendo raramente. Tendo +2 no teste que envolva achar caminhos.'
+          'Com um excelente senso de direção. Os ciganos geralmente têm uma orientação em viagem se perdendo raramente. Tendo +2 no teste que envolva achar caminhos.'
       },
       skill1: {
         title: 'O Tolo',

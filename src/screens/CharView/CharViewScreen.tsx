@@ -11,7 +11,8 @@ import {
   Surface,
   TextInput,
   Title,
-  List
+  List,
+  Paragraph
 } from 'react-native-paper';
 
 import Styles from './Styles';
@@ -24,7 +25,9 @@ import {
   AlvoradaRaces,
   AlvoradaRaceType,
   getAllowedClasses,
-  randomCharName
+  randomCharName,
+  AlvoradaClassInfoList,
+  AlvoradaClassData
 } from '../../core/Char';
 
 interface State {
@@ -285,19 +288,38 @@ export default class CharViewScreen extends Component<any, State> {
 
             <List.Section>
               <Title>Habilidades de Classe</Title>
-              <List.Accordion
-                title="Habilidades"
-                left={props => <List.Icon {...props} icon="sword-cross" />}
-              >
-                <List.Item title="First item" />
-              </List.Accordion>
+              {_.map(
+                [
+                  _.get(
+                    AlvoradaClassInfoList,
+                    `class-${this.state.char.charClass}`
+                  )
+                ],
+                (classData: AlvoradaClassData) => {
+                  return _.map(classData.skills, (skill, iSkill) => {
+                    if (skill.desc !== '--') {
+                      return (
+                        <List.Accordion
+                          key={iSkill.toString()}
+                          title={skill.title}
+                          left={props => (
+                            <List.Icon {...props} icon="sword-cross" />
+                          )}
+                        >
+                          <Paragraph>{skill.desc}</Paragraph>
+                        </List.Accordion>
+                      );
+                    }
+                  });
+                }
+              )}
             </List.Section>
             <List.Section>
               <Title>Perícias</Title>
 
               <List.Accordion
                 title="Perícias"
-                left={props => <Checkbox status="checked" />}
+                left={props => <Checkbox {...props} status="checked" />}
               >
                 <List.Item title="First item" />
               </List.Accordion>
