@@ -15,16 +15,19 @@ export default StyleSheet.create({
     padding: 8
   },
   hScrollView: {
+    flex: 1,
     width
   },
   homeMenuItems: {
     width,
+    padding: 8,
     flexWrap: 'wrap',
-    flexDirection: 'row',
-    justifyContent: 'space-evenly',
-    height: height - 1000
+    justifyContent: 'space-evenly'
   },
-  nameContainer: {
-    // flexDirection: 'row'
-  }
+  lineWrapper: {
+    flex: 1,
+    flexDirection: 'row',
+    marginBottom: 8
+  },
+  inputWrapper: { flex: 1, marginRight: 8 }
 });

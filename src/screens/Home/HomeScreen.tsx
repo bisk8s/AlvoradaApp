@@ -2,7 +2,7 @@ import Constants from 'expo-constants';
 import React, { Component } from 'react';
 import _ from 'lodash';
 
-import { Appbar, Title, Button } from 'react-native-paper';
+import { Appbar, Title, Button, Surface } from 'react-native-paper';
 
 import Styles from './Styles';
 import { ScrollView, View } from 'react-native';
@@ -43,7 +43,7 @@ export default class HomeScreeen extends Component<any, State> {
 
   render() {
     return (
-      <View style={Styles.container}>
+      <Surface style={Styles.container}>
         <Appbar.Header style={Styles.appbar}>
           {/* <Appbar.Action icon="menu" onPress={() => {}} /> */}
           <Appbar.Content
@@ -79,7 +79,7 @@ export default class HomeScreeen extends Component<any, State> {
             })}
           </View>
         </ScrollView>
-      </View>
+      </Surface>
     );
   }
 }

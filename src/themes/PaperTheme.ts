@@ -1,4 +1,4 @@
-import { DefaultTheme } from 'react-native-paper';
+import { DarkTheme } from 'react-native-paper';
 import { Theme } from 'react-native-paper/lib/typescript/src/types';
 
 const fontConfig: FontConfig = {
@@ -21,13 +21,14 @@ const fontConfig: FontConfig = {
 };
 
 const PaperTheme: Theme = {
-  ...DefaultTheme,
+  ...DarkTheme,
+  dark: true,
   fonts: fontConfig,
   colors: {
-    ...DefaultTheme.colors,
+    ...DarkTheme.colors,
     primary: '#3498db',
-    accent: '#f1c40f',
-    text: '#211d1d'
+    accent: '#f1c40f'
+    // text: '#211d1d'
   }
 };
 

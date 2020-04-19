@@ -336,7 +336,7 @@ export default class CategoryIcon extends Component<Props> {
       >
         <G
           fill={this.props.fill || 'none'}
-          stroke={this.props.stroke || '#211d1d'}
+          stroke={this.props.stroke || '#e7e7e7' || '#211d1d'}
           strokeWidth={this.props.strokeWidth || this._strokeWidth}
           strokeLinecap="round"
           strokeLinejoin="round"
