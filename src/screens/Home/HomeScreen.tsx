@@ -50,6 +50,10 @@ export default class HomeScreeen extends Component<any, State> {
       saveChar: this._saveSingleChar
     });
   };
+  _deleteChar = (char: AlvoradaChar) => {
+    const { charList } = this.state;
+    this._saveChars(_.pull(charList, char));
+  };
   _saveSingleChar = (char: AlvoradaChar, charId: number) => {
     const { charList } = this.state;
     charList[charId] = char;
@@ -83,7 +87,8 @@ export default class HomeScreeen extends Component<any, State> {
                     { text: 'Nvl.', icon: `numeric-${char.level}-circle` }
                   ]}
                   icon={char.charClass.toString() as CategoryIconType}
-                  onPress={() => this._editChar(char, iChar)}
+                  onEditPressed={() => this._editChar(char, iChar)}
+                  onDeletePressed={() => this._deleteChar(char)}
                 />
               );
             })}
