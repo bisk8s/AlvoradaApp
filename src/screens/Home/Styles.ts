@@ -21,6 +21,7 @@ export default StyleSheet.create({
     width,
     flexWrap: 'wrap',
     flexDirection: 'row',
-    justifyContent: 'space-evenly'
+    justifyContent: 'space-evenly',
+    paddingBottom: height * 0.5
   }
 });

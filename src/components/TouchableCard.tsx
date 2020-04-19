@@ -44,6 +44,9 @@ export default class TouchableCard extends Component<Props, State> {
         anchor={
           <TouchableOpacity
             onPress={() => {
+              this.props.onEditPressed();
+            }}
+            onLongPress={() => {
               this.setState({ menuVisible: true });
             }}
           >

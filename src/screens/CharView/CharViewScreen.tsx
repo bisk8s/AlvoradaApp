@@ -65,21 +65,21 @@ export default class CharViewScreen extends Component<any, State> {
     return (
       <Surface style={Styles.container}>
         <Appbar.Header style={Styles.appbar}>
+          <Appbar.Content
+            title={Constants.manifest.name}
+            subtitle={Constants.manifest.version}
+          />
           <Appbar.Action
-            icon="arrow-left"
+            icon="content-save"
             onPress={() => {
               this._saveChanges();
               this.props.navigation.goBack();
             }}
           />
-          <Appbar.Content
-            title={Constants.manifest.name}
-            subtitle={Constants.manifest.version}
-          />
         </Appbar.Header>
 
         <ScrollView style={Styles.hScrollView}>
-          <View style={Styles.homeMenuItems}>
+          <View style={Styles.scrollContent}>
             <Title>Dados</Title>
             {/* Nome */}
             <View style={Styles.lineWrapper}>
@@ -341,7 +341,7 @@ export default class CharViewScreen extends Component<any, State> {
                 }
               )}
             </List.Section>
-            <List.Section>
+            {/* <List.Section>
               <Title>Perícias</Title>
 
               <List.Accordion
@@ -350,7 +350,7 @@ export default class CharViewScreen extends Component<any, State> {
               >
                 <List.Item title="First item" />
               </List.Accordion>
-            </List.Section>
+            </List.Section> */}
           </View>
         </ScrollView>
       </Surface>

@@ -5,8 +5,7 @@ const { width, height } = Dimensions.get('screen');
 export default StyleSheet.create({
   container: {
     width,
-    height,
-    paddingBottom: 30
+    height
   },
   appbar: {
     width
@@ -15,14 +14,14 @@ export default StyleSheet.create({
     padding: 8
   },
   hScrollView: {
-    flex: 1,
     width
   },
-  homeMenuItems: {
+  scrollContent: {
     width,
     padding: 8,
     flexWrap: 'wrap',
-    justifyContent: 'space-evenly'
+    justifyContent: 'space-evenly',
+    paddingBottom: height * 0.5
   },
   lineWrapper: {
     flex: 1,
