@@ -18,34 +18,35 @@ import LocalStorage from '../../services/LocalStorage';
 import {
   AlvoradaChar,
   AlvoradaRaces as AlvoradaRacesList,
-  AlvoradaClassList,
   AlvoradaClassType,
   getAllowedClasses,
-  AlvoradaRaceType
+  AlvoradaRaceType,
+  randomCharName
 } from '../../core/Char';
 
 interface State {
-  id: number;
   char: AlvoradaChar;
+  id: number;
 
   classMenuVisible: boolean;
   raceMenuVisible: boolean;
   levelMenuVisible: boolean;
 
+  saveChar?: (char: AlvoradaChar, id: number) => void;
   charClassList: AlvoradaClassType[];
 }
 
 export default class CharViewScreen extends Component<any, State> {
   constructor(props) {
     super(props);
-    const state = _.get(props.navigation.state, 'params', null);
+    const params = _.get(props.navigation.state, 'params', null);
     this.state = {
-      ...state,
+      ...params,
       classMenuVisible: false,
       raceMenuVisible: false,
       levelMenuVisible: false,
 
-      charClassList: getAllowedClasses(state.char.race)
+      charClassList: getAllowedClasses(params.char.race)
     };
   }
 
@@ -56,6 +57,8 @@ export default class CharViewScreen extends Component<any, State> {
           <Appbar.Action
             icon="arrow-left"
             onPress={() => {
+              this.state.saveChar &&
+                this.state.saveChar(this.state.char, this.state.id);
               this.props.navigation.goBack();
             }}
           />
@@ -81,10 +84,7 @@ export default class CharViewScreen extends Component<any, State> {
               <View
                 style={{ alignContent: 'center', justifyContent: 'center' }}
               >
-                <IconButton
-                  icon="shuffle"
-                  onPress={() => console.log('Pressed')}
-                />
+                <IconButton icon="shuffle" onPress={this._setRandomCharName} />
               </View>
             </View>
             {/* Raça */}
@@ -104,6 +104,9 @@ export default class CharViewScreen extends Component<any, State> {
                         mode="outlined"
                         value={this.state.char.race}
                         editable={false}
+                        onTouchEnd={() => {
+                          this.setState({ raceMenuVisible: true });
+                        }}
                       />
                     </TouchableOpacity>
                   }
@@ -124,10 +127,7 @@ export default class CharViewScreen extends Component<any, State> {
               <View
                 style={{ alignContent: 'center', justifyContent: 'center' }}
               >
-                <IconButton
-                  icon="shuffle"
-                  onPress={() => console.log('Pressed')}
-                />
+                <IconButton icon="shuffle" onPress={this._setRandomCharRace} />
               </View>
             </View>
             {/* Classe */}
@@ -147,6 +147,9 @@ export default class CharViewScreen extends Component<any, State> {
                         mode="outlined"
                         value={this.state.char.charClass}
                         editable={false}
+                        onTouchEnd={() => {
+                          this.setState({ classMenuVisible: true });
+                        }}
                       />
                     </TouchableOpacity>
                   }
@@ -167,10 +170,7 @@ export default class CharViewScreen extends Component<any, State> {
               <View
                 style={{ alignContent: 'center', justifyContent: 'center' }}
               >
-                <IconButton
-                  icon="shuffle"
-                  onPress={() => console.log('Pressed')}
-                />
+                <IconButton icon="shuffle" onPress={this._setRandomCharClass} />
               </View>
             </View>
             {/* Level */}
@@ -190,6 +190,9 @@ export default class CharViewScreen extends Component<any, State> {
                         mode="outlined"
                         value={this.state.char.level.toString()}
                         editable={false}
+                        onTouchEnd={() => {
+                          this.setState({ levelMenuVisible: true });
+                        }}
                       />
                     </TouchableOpacity>
                   }
@@ -221,6 +224,18 @@ export default class CharViewScreen extends Component<any, State> {
     );
   }
 
+  _saveChanges = () => {};
+
+  _setRandomCharName = () => {
+    const name = randomCharName(this.state.char.race, this.state.char.gender);
+    this.setState({
+      char: {
+        ...this.state.char,
+        name
+      }
+    });
+  };
+
   _closeAllMenus = () => {
     this.setState({
       classMenuVisible: false,
@@ -242,10 +257,10 @@ export default class CharViewScreen extends Component<any, State> {
     this._closeAllMenus();
   };
 
-  _setRandomCharRace() {
+  _setRandomCharRace = () => {
     this._setCharRace(_.sample(AlvoradaRacesList));
-  }
-  _setCharRace(race: AlvoradaRaceType) {
+  };
+  _setCharRace = (race: AlvoradaRaceType) => {
     let charClass = this.state.char.charClass;
     const charClassList = getAllowedClasses(race);
     if (_.lastIndexOf(charClassList, charClass) < 0) {
@@ -260,12 +275,12 @@ export default class CharViewScreen extends Component<any, State> {
       charClassList
     });
     this._closeAllMenus();
-  }
+  };
 
-  _setRandomCharClass() {
-    this._setCharClass(_.sample(AlvoradaClassList));
-  }
-  _setCharClass(charClass: AlvoradaClassType) {
+  _setRandomCharClass = () => {
+    this._setCharClass(_.sample(this.state.charClassList));
+  };
+  _setCharClass = (charClass: AlvoradaClassType) => {
     this.setState({
       char: {
         ...this.state.char,
@@ -273,5 +288,5 @@ export default class CharViewScreen extends Component<any, State> {
       }
     });
     this._closeAllMenus();
-  }
+  };
 }

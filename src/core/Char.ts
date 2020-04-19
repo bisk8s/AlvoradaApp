@@ -131,15 +131,7 @@ const racesConversionTable = {
 export function randomNewChar(): AlvoradaChar {
   const gender = _.sample(['male', 'female', 'transgender']) as AlvoradaGender;
   const race = _.sample(races) as AlvoradaRaceType;
-  const genRace = _.get(racesConversionTable, `en-for-${race}`);
-  const genGender = gender === 'male' ? gender : 'female';
-  const name = _.toString(
-    nameByRace(genRace, {
-      gender: genGender,
-      allowMultipleNames: false
-    })
-  );
-  console.log(genRace, genGender, name);
+  const name = randomCharName(race, gender);
   const charClass = _.sample(getAllowedClasses(race));
   return {
     name,
@@ -148,6 +140,17 @@ export function randomNewChar(): AlvoradaChar {
     race,
     charClass
   };
+}
+
+export function randomCharName(race, gender) {
+  const genRace = _.get(racesConversionTable, `en-for-${race}`);
+  const genGender = gender === 'male' ? gender : 'female';
+  return _.toString(
+    nameByRace(genRace, {
+      gender: genGender,
+      allowMultipleNames: false
+    })
+  );
 }
 
 export function getAllowedClasses(race: AlvoradaRaceType): AlvoradaClassType[] {

@@ -30,8 +30,7 @@ export default class HomeScreeen extends Component<any, State> {
   _newChar = () => {
     const { charList } = this.state;
     charList.push(randomNewChar());
-    this.setState({ charList });
-    LocalStorage.set('charList', charList);
+    this._saveChars(charList);
   };
   _loadChars = () => {
     LocalStorage.get('charList').then(charList => {
@@ -39,6 +38,22 @@ export default class HomeScreeen extends Component<any, State> {
         this.setState({ charList });
       }
     });
+  };
+  _saveChars = charList => {
+    this.setState({ charList });
+    LocalStorage.set('charList', charList);
+  };
+  _editChar = (char: AlvoradaChar, charId: number) => {
+    this.props.navigation.navigate('CharView', {
+      char,
+      id: charId,
+      saveChar: this._saveSingleChar
+    });
+  };
+  _saveSingleChar = (char: AlvoradaChar, charId: number) => {
+    const { charList } = this.state;
+    charList[charId] = char;
+    this._saveChars(charList);
   };
 
   render() {
@@ -68,12 +83,7 @@ export default class HomeScreeen extends Component<any, State> {
                     { text: 'Nvl.', icon: `numeric-${char.level}-circle` }
                   ]}
                   icon={char.charClass.toString() as CategoryIconType}
-                  onPress={() => {
-                    this.props.navigation.navigate('CharView', {
-                      char,
-                      id: iChar
-                    });
-                  }}
+                  onPress={() => this._editChar(char, iChar)}
                 />
               );
             })}
