@@ -26,7 +26,8 @@ class Logo extends Component<Props> {
         width={viewBox.width}
         height={viewBox.width}
         viewBox={`0 0 ${SIZE} ${SIZE}`}
-        fill={this.props.fill || '#211d1d'}
+        fill={this.props.fill || 'transparent'}
+        stroke={this.props.stroke || '#211d1d'}
       >
         <G transform={`translate(${SIZE / 2},${SIZE / 2})`}>
           <G transform={`translate(-${SIZE / 2},-${SIZE / 2})`}>

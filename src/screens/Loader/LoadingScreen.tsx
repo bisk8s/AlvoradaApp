@@ -138,11 +138,11 @@ class LoadingScreen extends Component<Props, State> {
             <Animated.View style={boomerang}>
               <Logo
                 style={{ width: 50, height: 50 }}
-                fill={Theme.colors.primary}
+                stroke={Theme.colors.primary}
               />
             </Animated.View>
           </Animated.View>
-          <Title>{Constants.manifest.name}</Title>
+          {/* <Title>{Constants.manifest.name}</Title> */}
         </View>
 
         <AppLoading

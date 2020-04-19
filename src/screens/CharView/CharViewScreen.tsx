@@ -5,16 +5,17 @@ import _ from 'lodash';
 import { ScrollView, View, TouchableOpacity } from 'react-native';
 import {
   Appbar,
+  Checkbox,
   IconButton,
   Menu,
   Surface,
   TextInput,
-  Title
+  Title,
+  List
 } from 'react-native-paper';
 
 import Styles from './Styles';
 
-import LocalStorage from '../../services/LocalStorage';
 import {
   AlvoradaChar,
   AlvoradaClassType,
@@ -71,11 +72,10 @@ export default class CharViewScreen extends Component<any, State> {
             subtitle={Constants.manifest.version}
           />
         </Appbar.Header>
-        <View style={Styles.titleWrapper}>
-          <Title>Ficha</Title>
-        </View>
+
         <ScrollView style={Styles.hScrollView}>
           <View style={Styles.homeMenuItems}>
+            <Title>Dados</Title>
             {/* Nome */}
             <View style={Styles.lineWrapper}>
               <View style={{ flex: 1, marginRight: 8 }}>
@@ -191,6 +191,9 @@ export default class CharViewScreen extends Component<any, State> {
                       mode="outlined"
                       value=" "
                       editable={false}
+                      onTouchEnd={() => {
+                        this.setState({ genderMenuVisible: true });
+                      }}
                       render={props => {
                         return (
                           <IconButton
@@ -211,7 +214,16 @@ export default class CharViewScreen extends Component<any, State> {
                         onPress={() => {
                           this._setCharGender(gender);
                         }}
-                        title=""
+                        title={(() => {
+                          switch (gender) {
+                            case 'male':
+                              return 'Masculino';
+                            case 'female':
+                              return 'Feminino';
+                            default:
+                              return 'Não Binário';
+                          }
+                        })()}
                         icon={`gender-${gender.toString()}`}
                       />
                     );
@@ -269,8 +281,27 @@ export default class CharViewScreen extends Component<any, State> {
                 <IconButton icon="shuffle" onPress={this._setRandomCharLevel} />
               </View>
             </View>
-
             {/* END */}
+
+            <List.Section>
+              <Title>Habilidades de Classe</Title>
+              <List.Accordion
+                title="Habilidades"
+                left={props => <List.Icon {...props} icon="sword-cross" />}
+              >
+                <List.Item title="First item" />
+              </List.Accordion>
+            </List.Section>
+            <List.Section>
+              <Title>Perícias</Title>
+
+              <List.Accordion
+                title="Perícias"
+                left={props => <Checkbox status="checked" />}
+              >
+                <List.Item title="First item" />
+              </List.Accordion>
+            </List.Section>
           </View>
         </ScrollView>
       </Surface>
