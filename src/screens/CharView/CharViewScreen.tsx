@@ -12,7 +12,8 @@ import {
   TextInput,
   Title,
   List,
-  Paragraph
+  Paragraph,
+  Divider
 } from 'react-native-paper';
 
 import Styles from './Styles';
@@ -27,7 +28,8 @@ import {
   getAllowedClasses,
   randomCharName,
   AlvoradaClassInfoList,
-  AlvoradaClassData
+  AlvoradaClassData,
+  raceBaseHP
 } from '../../core/Char';
 
 interface State {
@@ -285,7 +287,32 @@ export default class CharViewScreen extends Component<any, State> {
               </View>
             </View>
             {/* END */}
-
+            {_.map(
+              [
+                _.get(
+                  AlvoradaClassInfoList,
+                  `class-${this.state.char.charClass}`
+                )
+              ],
+              (classData: AlvoradaClassData) => {
+                return (
+                  <View style={Styles.lineWrapper} key="">
+                    <View>
+                      <Title>Max. PV</Title>
+                      <Paragraph>
+                        {_.get(raceBaseHP, `hp-${this.state.char.race}`) +
+                          classData.hpBonus * this.state.char.level}
+                      </Paragraph>
+                    </View>
+                    <Divider style={{ width: 30 }} />
+                    <View>
+                      <Title>Dano Base</Title>
+                      <Paragraph>1D{classData.damange}</Paragraph>
+                    </View>
+                  </View>
+                );
+              }
+            )}
             <List.Section>
               <Title>Habilidades de Classe</Title>
               {_.map(

@@ -1,6 +1,5 @@
 import _ from 'lodash';
-import { nameByRace, RaceType } from 'fantasy-name-generator';
-import { ClassType } from 'react';
+import { nameByRace } from 'fantasy-name-generator';
 
 export interface AlvoradaChar {
   name: string;
@@ -106,6 +105,19 @@ const allowedClassByRace = {
   'cl-for-Ogro': [...globalClasses, 'Xamã'],
   'cl-for-Trow': [...globalClasses, 'Necromante'],
   'cl-for-Urso': [...globalClasses, 'Monge']
+};
+
+export const raceBaseHP = {
+  'hp-Anão': 18,
+  'hp-Bastet': 12,
+  'hp-Caliban': 14,
+  'hp-Draconiano': 20,
+  'hp-Elfo': 14,
+  'hp-Goblin': 10,
+  'hp-Humano': 12,
+  'hp-Ogro': 18,
+  'hp-Trow': 14,
+  'hp-Urso': 18
 };
 
 const racesConversionTable = {
