@@ -336,7 +336,7 @@ export const AlvoradaClassInfoList: AlvoradaClassInfoListType = {
       skill4: {
         title: 'Just Dance',
         desc:
-          'Bardos podem encantar platéias e adversários, forçando- -os a dançar caso o teste seja bem sucedido. No sucesso 2 adversários ficam dançando, e em caso crítico todo o grupo de inimigos estará a dan- çar. Estar dançando impede qualquer ação durante 1D4 turnos.'
+          'Bardos podem encantar platéias e adversários, forçando-os a dançar caso o teste seja bem sucedido. No sucesso 2 adversários ficam dançando, e em caso crítico todo o grupo de inimigos estará a dançar. Estar dançando impede qualquer ação durante 1D4 turnos.'
       },
       skill5: {
         title: 'Requiem Machi',
@@ -499,7 +499,7 @@ export const AlvoradaClassInfoList: AlvoradaClassInfoListType = {
       passiveSkill: {
         title: 'O que é fogo?',
         desc:
-          'Dragões têm ainda mais resistência que de- mais guerreiros de sua raça. São praticamente imunes podendo até mesmo absorver parte deste poder concedendo bônus de ataque. O bônus de acerto pode ser acumulado mas tem o limite de +3.'
+          'Dragões têm ainda mais resistência que demais guerreiros de sua raça. São praticamente imunes podendo até mesmo absorver parte deste poder concedendo bônus de ataque. O bônus de acerto pode ser acumulado mas tem o limite de +3.'
       },
       skill1: {
         title: 'Pulo',
@@ -569,7 +569,7 @@ export const AlvoradaClassInfoList: AlvoradaClassInfoListType = {
       skill2: {
         title: 'Tremor da fornalha',
         desc:
-          'Anos de forja também deram uma forja ad- mirável ao ferreiro que pode auxiliá-lo, o aventureiro pode golpear o chão causando atordoamento em seus adversários por D4 turnos caso a rolagem de acerto seja bem sucedida.'
+          'Anos de forja também deram uma forja admirável ao ferreiro que pode auxiliá-lo, o aventureiro pode golpear o chão causando atordoamento em seus adversários por D4 turnos caso a rolagem de acerto seja bem sucedida.'
       },
       skill3: {
         title: 'Disciplina',
@@ -579,7 +579,7 @@ export const AlvoradaClassInfoList: AlvoradaClassInfoListType = {
       skill4: {
         title: 'Uma mãozinha aqui?',
         desc:
-          'Ferreiro pode aprimorar equipa- mento de seus aliados, mas apenas um de cada vez demorando uma semana dentro da aventura. O ferreiro não estará trabalhando de graça, o seu companheiro deve lhe pagar uma quantia de ouro para que este trabalho seja efetuado.'
+          'Ferreiro pode aprimorar equipamento de seus aliados, mas apenas um de cada vez demorando uma semana dentro da aventura. O ferreiro não estará trabalhando de graça, o seu companheiro deve lhe pagar uma quantia de ouro para que este trabalho seja efetuado.'
       },
       skill5: { title: '--', desc: '--' },
       ultimateSkill: { title: '--', desc: '--' }
