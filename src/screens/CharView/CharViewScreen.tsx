@@ -307,7 +307,11 @@ export default class CharViewScreen extends Component<any, State> {
                     <Divider style={{ width: 30 }} />
                     <View>
                       <Title>Dano Base</Title>
-                      <Paragraph>1D{classData.damange}</Paragraph>
+                      <Paragraph>
+                        {_.toArray(classData.damange)
+                          .map(value => `1D${value}`)
+                          .join(' / ')}
+                      </Paragraph>
                     </View>
                   </View>
                 );
