@@ -286,6 +286,7 @@ export default class CharViewScreen extends Component<any, State> {
                 <IconButton icon="shuffle" onPress={this._setRandomCharLevel} />
               </View>
             </View>
+            <Title>Dados de Combate</Title>
             {/* END */}
             {_.map(
               [
@@ -304,11 +305,13 @@ export default class CharViewScreen extends Component<any, State> {
                           classData.hpBonus * this.state.char.level}
                       </Paragraph>
                     </View>
-                    <Divider style={{ width: 30 }} />
                     <View>
                       <Title>Dano Base</Title>
                       <Paragraph>
-                        {_.toArray(classData.damange)
+                        {(_.isArray(classData.damange)
+                          ? classData.damange
+                          : [classData.damange]
+                        )
                           .map(value => `1D${value}`)
                           .join(' / ')}
                       </Paragraph>
@@ -345,8 +348,8 @@ export default class CharViewScreen extends Component<any, State> {
                 }
               )}
             </List.Section>
-            {/* <List.Section>
-              <Title>Perícias</Title>
+            <List.Section>
+              <Title>Perícias (0/0)</Title>
 
               <List.Accordion
                 title="Perícias"
@@ -354,7 +357,7 @@ export default class CharViewScreen extends Component<any, State> {
               >
                 <List.Item title="First item" />
               </List.Accordion>
-            </List.Section> */}
+            </List.Section>
           </View>
         </ScrollView>
       </Surface>

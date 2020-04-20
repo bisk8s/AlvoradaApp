@@ -24,9 +24,10 @@ export default StyleSheet.create({
     paddingBottom: height * 0.5
   },
   lineWrapper: {
-    flex: 1,
+    width,
     flexDirection: 'row',
-    marginBottom: 8
+    marginBottom: 8,
+    justifyContent: 'space-around'
   },
   inputWrapper: { flex: 1, marginRight: 8 }
 });
