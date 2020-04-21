@@ -7,6 +7,7 @@ export interface AlvoradaChar {
   gender: AlvoradaGenderType;
   race: AlvoradaRaceType;
   charClass: AlvoradaClassType;
+  abilities: AlvoradaAbility[];
 }
 
 export type AlvoradaGenderType = 'male' | 'female' | 'transgender';
@@ -147,7 +148,8 @@ export function randomNewChar(): AlvoradaChar {
     gender,
     level: 1,
     race,
-    charClass
+    charClass,
+    abilities: []
   };
 }
 
@@ -204,6 +206,19 @@ interface AlvoradaClassInfoListType {
   'class-Samurai': AlvoradaClassData;
   'class-Xamã': AlvoradaClassData;
 }
+
+export const raceMaxHabilities = {
+  'hb-Anão': 3,
+  'hb-Bastet': 2,
+  'hb-Caliban': 2,
+  'hb-Draconiano': 2,
+  'hb-Elfo': 3,
+  'hb-Goblin': 2,
+  'hb-Humano': 4,
+  'hb-Ogro': 2,
+  'hb-Trow': 3,
+  'hb-Urso': 1
+};
 
 export const AlvoradaClassInfoList: AlvoradaClassInfoListType = {
   'class-Arqueiro': {
@@ -881,3 +896,262 @@ export const AlvoradaClassInfoList: AlvoradaClassInfoListType = {
     }
   }
 };
+
+export interface AlvoradaAbility {
+  name: string;
+  desc: string;
+}
+//
+export const abilitiesList: AlvoradaAbility[] = [
+  {
+    name: 'A mesma praça',
+    desc:
+      'Aproveitando de seu carisma, este aventureiro pode distrair ou conquistar a simpatia de um adversário ou NPC através de uma piada.'
+  },
+  {
+    name: 'Coisinha de Jesus',
+    desc:
+      'O aventureiro treinou por tempos com um exímio professor de dança, tornando esta arte uma boa forma de cativar público.'
+  },
+  {
+    name: 'Diplomacia',
+    desc:
+      'Com uma ajudinha de carisma o aventureiro tem boa chance de conseguir uma boa conversa com figuras importantes como reis, líderes de clã e etc.'
+  },
+  { name: 'Domesticar', desc: 'Ganha a habilidade de Domesticar, ver anexo.' },
+  {
+    name: 'Guardião da floresta',
+    desc:
+      'Este aventureiro poderá comunicar com a fauna e flora. Caso já tenha algo semelhante nas habilidades de classe ganha um bônus de +1 nas rolagens de conversações.'
+  },
+  {
+    name: 'Iroh',
+    desc:
+      'O aventureiro tem aprimoramento em suas habilidades de convencimento. Caso falhe o aventureiro pode ser comprado pela ideia de seu adversário.'
+  },
+  {
+    name: 'Mostra quem manda',
+    desc:
+      'Abusando de um semblante amedrontador o aventureiro pode tentar encarar seus problemas assustando o adversário.'
+  },
+  {
+    name: 'Retórica',
+    desc:
+      'A capacidade de encantar o público com seu discurso caso tenham um teste bem sucedido.'
+  },
+  {
+    name: 'Trato feito',
+    desc:
+      'Abusando de seu carisma o aventureiro pode ter negociações que beneficiarão o grupo, podendo ter descontos, itens ou outros extras.'
+  },
+
+  {
+    name: 'Bear Grylls',
+    desc:
+      'Esse aventureiro tem a habilidade de sobreviver em condições desfavoráveis, achando alimento e água facilmente.'
+  },
+  {
+    name: 'Briguento',
+    desc:
+      'Este aventureiro gosta de uma briga em tavernas, halls de guildas entre outros lugares. Podendo resistir bem nesse ambiente caótico.'
+  },
+  {
+    name: 'Casca dura',
+    desc:
+      'A pele castigada por várias batalhas transforma-se em uma resistência a mais para o aventureiro.'
+  },
+  {
+    name: 'Corujão',
+    desc:
+      'Sono não é um problema: algumas noites em claro são tranquilas para este aventureiro.'
+  },
+  {
+    name: 'Duro como pedra',
+    desc:
+      'Uma vez por semana o aventureiro coloca todo seu treinamento de resistência em prática podendo negar um dano por completo. Seja em combate ou fora dele.'
+  },
+  {
+    name: 'Estômago de ferro',
+    desc:
+      'O aventureiro tem a incrível capacidade de não ser vulnerável a comidas estranhas.'
+  },
+  {
+    name: 'Fome de anão',
+    desc:
+      'Este aventureiro pode comer mais do que a maioria esperaria que ele conseguisse.'
+  },
+  {
+    name: 'Maromba',
+    desc:
+      'O aventureiro tem um condicionamento físico aprimorado, podem aguentar mais um dia de aventura sem precisar de descanso.'
+  },
+  {
+    name: 'Parkour',
+    desc:
+      'O aventureiro pode efetuar peripécias que envolvem corridas em difíceis acessos sem cansar facilmente.'
+  },
+  {
+    name: 'Perseguir',
+    desc:
+      'O aventureiro têm um fôlego extra para que consiga exercer grandes perseguições.'
+  },
+
+  {
+    name: 'Aprimorar força',
+    desc:
+      'A energia vital se transforma em uma poderosa aliada do guerreiro aumentando sua força para tarefas e combates. Gera um bônus de +1 no teste de acerto.'
+  },
+  {
+    name: 'Arremesso',
+    desc:
+      'Este aventureiro pode arremessar armas e objetos com maestria. Caso tenha um anão como aliado, o PJ pode arremessá-lo em direção ao adversário ou local necessário.'
+  },
+  {
+    name: 'Arte marcial',
+    desc:
+      'Arte marcial permite com que o PJ possa atacar mesmo desarmado, isso quer dizer que caso esteja sem sua arma continua a dar o seu dano original.'
+  },
+  {
+    name: 'BIRL!!!',
+    desc:
+      'O Aventureiro tem a possibilidade de aprimorar seus sentidos ganhando um bônus em testes para efetuar tarefas físicas, porém sua guarda está aberta podendo tomar mais dano.'
+  },
+  {
+    name: 'Duas mãos',
+    desc:
+      'O guerreiro que abdicou de sua defesa para envolver sua arma por duas mãos. Gera um bônus de +1 no teste de acerto.'
+  },
+  {
+    name: 'Dupla empunhadura',
+    desc:
+      'Este aventureiro decidiu treinar suas habilidades para que possa estar usando duas armas em combate. Tem a possibilidade de rolar dois dados de dano e poder ficar com o de valor maior porém toma mais 1 de dano recebido.'
+  },
+  {
+    name: 'Mestre de arma',
+    desc:
+      'Este aventureiro se torna um especialista na arma escolhida, podendo empunhar com maestria. Gera um bônus de +1 no teste de acerto.'
+  },
+  {
+    name: 'Mira aprimorada',
+    desc:
+      'Este aventureiro treinou por anos a capacidade de concentração aprimorando sua mira. Gera um bônus de +1 no teste de acerto.'
+  },
+
+  {
+    name: 'Acorda menina',
+    desc:
+      'Caso haja uma emboscada este aventureiro pode ter seus reflexos rápidos para ter uma boa iniciativa ou perceber algo que ameace a ele ou ao grupo. Concede um bônus de +2 em iniciativa.'
+  },
+  {
+    name: 'Acrobata',
+    desc:
+      'O aventureiro tem a capacidade de executar atividades que envolvam uma desenvoltura física aprimorada.'
+  },
+  {
+    name: 'Agilidade aprimorada',
+    desc:
+      'Essa perícia aumenta a agilidade do aventureiro. Ajudando-o em corridas, iniciativa e reflexos. Concede bônus de +1 em testes que envolva agilidade(iniciativa incluso)'
+  },
+  {
+    name: 'Dedos ágeis',
+    desc:
+      'Dedos ágeis possibilitam ao aventureiro uma habilidade maior em ações furtivas.'
+  },
+  {
+    name: 'Kronk',
+    desc:
+      'Passos silenciosos, presença quase imperceptível é parte de um aventureiro que luta com esperteza.'
+  },
+  {
+    name: 'Primeiro ataque',
+    desc:
+      'Esses aventureiros têm bônus em iniciativa podendo até surpreender inimigos dentro de batalhas. Concede um bônus de +1 em iniciativa.'
+  },
+  {
+    name: 'Rebate rápido',
+    desc:
+      'Rebate rápido dá a chance ao aventureiro de rebater um ataque que o inimigo tenha errado. Só pode ser usado uma vez por turno.'
+  },
+  {
+    name: 'Saque rápido',
+    desc:
+      'O aventureiro pode ter a chance do primeiro ataque com o inimigo ainda despreparado. Concede bônus de +1 em iniciativa.'
+  },
+
+  {
+    name: 'Acerto miserávi',
+    desc:
+      'se houver rolagem bem sucedida o aventureiro consegue saber os pontos de vida que seu adversário têm.'
+  },
+  {
+    name: 'Confecção aprimorada',
+    desc:
+      'Este aventureiro dedicou anos de sua vida estudando a criação artesanal conseguindo diminuir seu tempo. O Aventureiro têm redução de 1 dia na confecção. Afeta também a forja.'
+  },
+  {
+    name: 'Cura aprimorada',
+    desc:
+      'As habilidades de cura do aventureiro, sejam elas scrolls, poções ou habilidades, são aprimoradas curando 1 PV a mais.'
+  },
+  {
+    name: 'Esfinge',
+    desc:
+      'Os dons são muito e alguns têm o de interpretar. Tanto inscrições, idiomas, situações, itens e etc.'
+  },
+  {
+    name: 'Intuição',
+    desc:
+      'O aventureiro pode ter alguma intuição sobre algum quebra-cabeça ou desafio que fora colocado em sua aventura. Além de poder detectar perigo ou coisas escondidas.'
+  },
+  {
+    name: 'Palmirinha',
+    desc:
+      'Este aventureiro têm a possibilidade de fazer pratos exímios caso consiga ser bem sucedido em seu teste.'
+  },
+  {
+    name: 'Pepe geográfico',
+    desc:
+      'Melhor do que força, é conhecer o terreno que anda. Conhecer lugares para encontrar oásis e lugares de re- lento ou escondidos.'
+  },
+  {
+    name: 'Poder aprimorado',
+    desc:
+      'Esta perícia permite com que habilidades e poderes tenham uma eficácia maior podendo ser executados com maior facilidade.'
+  },
+  {
+    name: 'Rastreio',
+    desc:
+      'Esta perícia permite com que o aventureiro possa tentar rastrear uma trilha de inimigos ou achar trilhas que não são tão claras.'
+  },
+  {
+    name: 'Wiki',
+    desc:
+      'Conhecimentos antigos são de familiaridade deste personagem podendo interpretar caso passe no teste.'
+  },
+
+  {
+    name: 'Mente calibrada',
+    desc:
+      'Seu aventureiro pode resistir a controles mentais que eventualmente encontre em sua jornada.'
+  },
+  {
+    name: 'Omega 3',
+    desc:
+      'Esquecer não é do feitio do seu personagem. Caso algum inimigo ou ambiente tente causar amnésia pode ser evitado.'
+  },
+  {
+    name: 'Resistência aprimorada',
+    desc:
+      'Proporciona ao aventureiro resistência a status negativos como: envenenado, enfraquecido, maldição e etc. Pode negar um status negativo que venha atingir o PJ.'
+  },
+  {
+    name: 'Resistência elemental',
+    desc:
+      'Esta perícia da possibilidade de ter uma resistência a mais a algum elemento que seja escolhido. Os elementos disponíveis são: Fogo, água, terra, ar, sagrado, veneno, neutro.'
+  },
+  {
+    name: 'Vontade de ferro',
+    desc:
+      'Quando o PJ for nocauteado ele têm D4 turnos antes de desmaiar por completo.'
+  }
+];

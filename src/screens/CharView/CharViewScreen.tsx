@@ -13,7 +13,7 @@ import {
   Title,
   List,
   Paragraph,
-  Divider
+  Switch
 } from 'react-native-paper';
 
 import Styles from './Styles';
@@ -29,7 +29,9 @@ import {
   randomCharName,
   AlvoradaClassInfoList,
   AlvoradaClassData,
-  raceBaseHP
+  raceBaseHP,
+  abilitiesList,
+  raceMaxHabilities
 } from '../../core/Char';
 
 interface State {
@@ -45,7 +47,11 @@ interface State {
   saveChar?: (char: AlvoradaChar, id: number) => void;
 }
 
-export default class CharViewScreen extends Component<any, State> {
+interface Props {
+  navigation: any;
+}
+
+export default class CharViewScreen extends Component<Props, State> {
   constructor(props) {
     super(props);
     const params = _.get(props.navigation.state, 'params', null);
@@ -72,7 +78,7 @@ export default class CharViewScreen extends Component<any, State> {
           <Appbar.Action
             icon="content-save"
             onPress={() => {
-              this._saveChanges();
+              this._saveChanges(this.state.char);
               this.props.navigation.goBack();
             }}
           />
@@ -349,14 +355,59 @@ export default class CharViewScreen extends Component<any, State> {
               )}
             </List.Section>
             <List.Section>
-              <Title>Perícias (0/0)</Title>
-
-              <List.Accordion
-                title="Perícias"
-                left={props => <Checkbox {...props} status="checked" />}
-              >
-                <List.Item title="First item" />
-              </List.Accordion>
+              <Title>
+                Perícias: ({this.state.char.abilities.length}/
+                {_.get(raceMaxHabilities, `hb-${this.state.char.race}`, 0) +
+                  this.state.char.level -
+                  1}
+                )
+              </Title>
+              {_.map(abilitiesList, (ability, iAbility) => {
+                return (
+                  <List.Accordion
+                    key={iAbility.toString()}
+                    title={ability.name}
+                    left={props => (
+                      <Checkbox
+                        {...props}
+                        status={
+                          this.state.char.abilities.lastIndexOf(ability) < 0
+                            ? 'unchecked'
+                            : 'checked'
+                        }
+                      />
+                    )}
+                  >
+                    <View
+                      style={{
+                        paddingRight: 16,
+                        alignItems: 'flex-start'
+                      }}
+                    >
+                      <View style={{ flexDirection: 'row' }}>
+                        <Paragraph>Ativar: </Paragraph>
+                        <Switch
+                          onValueChange={() => {
+                            const { char } = this.state;
+                            if (char.abilities.lastIndexOf(ability) < 0) {
+                              char.abilities.push(ability);
+                            } else {
+                              _.pull(char.abilities, ability);
+                            }
+                            this._saveChanges(char);
+                          }}
+                          value={
+                            !(
+                              this.state.char.abilities.lastIndexOf(ability) < 0
+                            )
+                          }
+                        />
+                      </View>
+                      <Paragraph>{ability.desc}</Paragraph>
+                    </View>
+                  </List.Accordion>
+                );
+              })}
             </List.Section>
           </View>
         </ScrollView>
@@ -364,7 +415,13 @@ export default class CharViewScreen extends Component<any, State> {
     );
   }
 
-  _saveChanges = () => {
+  _saveChanges = (char: AlvoradaChar) => {
+    this.setState({
+      char: {
+        ...this.state.char,
+        ...char
+      }
+    });
     if (this.state.saveChar)
       this.state.saveChar(this.state.char, this.state.id);
   };
@@ -374,13 +431,11 @@ export default class CharViewScreen extends Component<any, State> {
     this._setCharName(name);
   };
   _setCharName = name => {
-    this.setState({
-      char: {
-        ...this.state.char,
-        name
-      }
-    });
-    this._saveChanges();
+    const char = {
+      ...this.state.char,
+      name
+    };
+    this._saveChanges(char);
   };
 
   _closeAllMenus = () => {
@@ -396,14 +451,12 @@ export default class CharViewScreen extends Component<any, State> {
     this._setCharLevel(_.sample(_.times(6, num => num + 1)));
   };
   _setCharLevel = (level: number) => {
-    this.setState({
-      char: {
-        ...this.state.char,
-        level
-      }
-    });
+    const char = {
+      ...this.state.char,
+      level
+    };
     this._closeAllMenus();
-    this._saveChanges();
+    this._saveChanges(char);
   };
 
   _setRandomCharRace = () => {
@@ -416,42 +469,38 @@ export default class CharViewScreen extends Component<any, State> {
       charClass = _.first(charClassList);
     }
     this.setState({
-      char: {
-        ...this.state.char,
-        race,
-        charClass
-      },
       charClassList
     });
+    const char = {
+      ...this.state.char,
+      race,
+      charClass
+    };
     this._closeAllMenus();
-    this._saveChanges();
+    this._saveChanges(char);
   };
 
   _setRandomCharClass = () => {
     this._setCharClass(_.sample(this.state.charClassList));
   };
   _setCharClass = (charClass: AlvoradaClassType) => {
-    this.setState({
-      char: {
-        ...this.state.char,
-        charClass
-      }
-    });
+    const char = {
+      ...this.state.char,
+      charClass
+    };
     this._closeAllMenus();
-    this._saveChanges();
+    this._saveChanges(char);
   };
 
   _setRandomCharGender = () => {
     this._setCharGender(_.sample(AlvoradaGenders));
   };
   _setCharGender = (gender: AlvoradaGenderType) => {
-    this.setState({
-      char: {
-        ...this.state.char,
-        gender
-      }
-    });
+    const char = {
+      ...this.state.char,
+      gender
+    };
     this._closeAllMenus();
-    this._saveChanges();
+    this._saveChanges(char);
   };
 }
